@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Test Results{% endblock %}
+
+{% block content %}
+  <main class="container mx-auto p-6 md:p-10">
+    <div class="flex justify-between mb-8 ">
+      <div>
+        <h1 class="text-4xl font-bold">Результаты теста</h1>
+        <p class="text-lg text-gray-600 mt-2">Шкала пищевого поведения</p>
+      </div>
+    </div>
+    <div class="border bg-card text-card-foreground rounded-md shadow-lg overflow-x-auto" data-v0-t="card">
+      <div class="flex flex-col space-y-1.5 bg-purple-400 p-4">
+        <h3 class="font-semibold text-lg">Таблица результатов</h3>
+      </div>
+      <div class="p-4">
+        <div class="mt-4">
+          <table class="table-auto w-full mb-8">
+            <thead>
+              <tr>
+                <th class="px-4 py-2">Номер п/п</th>
+                <th class="px-4 py-2">Дата тестирования</th>
+                <th class="px-4 py-2">Наименование теста</th>
+                <th class="px-4 py-2">Результат</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for result in test_results %}
+                <tr>
+                  <td class="border px-4 py-2">{{ forloop.counter }}</td>
+                  <td class="border px-4 py-2">{{ result.date_completed|default:"N/A" }}</td>
+                  <td class="border px-4 py-2">Стремление к худобе</td>
+                  <td class="border px-4 py-2">{{ result.thinness_striving_stenain }}</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2">Булимия</td>
+                  <td class="border px-4 py-2">{{ result.bulimia_stenain }}</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2">Неудовлетворенность телом</td>
+                  <td class="border px-4 py-2">{{ result.body_dissatisfaction_stenain }}</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2">Неэффективность</td>
+                  <td class="border px-4 py-2">{{ result.ineffectiveness_stenain }}</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2">Перфекционизм</td>
+                  <td class="border px-4 py-2">{{ result.perfectionism_stenain }}</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2">Недоверие в межличностных отношениях</td>
+                  <td class="border px-4 py-2">{{ result.interpersonal_distrust_stenain }}</td>
+                </tr>
+                <tr>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2"></td>
+                  <td class="border px-4 py-2">Интероцептивная некомпетентность</td>
+                  <td class="border px-4 py-2">{{ result.interoceptive_incompetence_stenain }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="border bg-card text-card-foreground rounded-md shadow-lg" data-v0-t="card">
+      <div class="flex flex-col space-y-1.5 bg-purple-400 p-4">
+        <h3 class="font-semibold text-lg">График результатов теста</h3>
+      </div>
+        <div class="p-4">
+          <div class="w-full aspect-[4/3]">
+            <img src="data:image/png;base64,{{ image_base64 }}" alt="Test Graph" class="w-full h-full object-cover">
+          </div>
+          <div class="mt-4">
+            <p class="text-sm font-medium text-gray-600">
+              <span class="px-2 bg-green-500 text-white rounded">Стремление к худобе</span>
+              <span class="px-2 bg-red-500 text-white rounded">Булимия</span>
+              <span class="px-2 bg-blue-500 text-white rounded">Неудовлетворенность телом</span>
+              <span class="px-2 bg-yellow-500 text-white rounded">Неэффективность</span>
+              <span class="px-2 bg-purple-500 text-white rounded">Перфекционизм</span>
+              <span class="px-2 bg-pink-500 text-white rounded">Недоверие в межличностных отношениях</span>
+              <span class="px-2 bg-gray-500 text-white rounded">Интероцептивная некомпетентность</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    <button class="border-2 border-gray-300 border-solid flex inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-600 h-10 px-4 py-2 bg-gray-500 text-white w-full mt-4" onclick="window.location.href='{% url 'home' %}'">На главную страницу</button>
+  </main>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.6.0/hint.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/hint.css@2.6.0/dist/hint.min.js"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>{% block title %}"ВЫСОТА" центр когнитивных технологий{% endblock %}</title>
+</head>
+
+<body>
+    <div class="background"></div>
+    <main class="container mx-auto p-6 md:p-10 bg-fixed">
+        <div class="flex justify-between mb-8">
+            <div>
+                <h1 class="text-5xl text-shadow-md text-blue-600 font-bold">"ВЫСОТА"</h1>
+                <h1 class="text-4xl text-shadow-md text-blue-600 font-bold">центр когнитивных технологий</h1>
+                <p class="text-2xl text-gray-900 font-bold mt-2">Психологические тесты </p>
+            </div>
+            <div class="flex gap-4">
+                {% if user.is_authenticated %}
+                    <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-500 text-white h-10 px-4 py-2 mt-4 hover:bg-blue-600"
+                        onclick="window.location.href='{% url 'logout' %}'">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="w-4 h-4 mr-2"
+                        >
+                          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Выйти
+                    </button>
+                <div>
+            </div>
+                {% else %}
+                <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-white hover:bg-red-600 h-10 px-4 py-2 mt-4"
+                        onclick="window.location.href='{% url 'login' %}'">
+                            <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="w-4 h-4 mr-2"
+                        >
+                          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Войти
+                </button>
+                <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-500 text-white hover:bg-green-600 h-10 px-4 py-2 mt-4"
+                        onclick="window.location.href='{% url 'signup' %}'">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="w-4 h-4 mr-2"
+                        >
+                          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                          <polyline points="10 17 15 12 10 7"></polyline>
+                          <line x1="15" x2="3" y1="12" y2="12"></line>
+                        </svg>
+                        Регистрация
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% block content %}
+            {% if user.is_authenticated %}
+            <div class="p-6 mb-2 rounded-md">
+                <h2 class="text-2xl font-semibold mb-2">Добро пожаловать {{user.username}}!</h2>
+                <p class="text-xl text-gray-900 mb-2">Готовы пройти тестирование? Тогды выбирайте тест и нажимайте на кнопку "Начать тест"</p>
+            </div>
+            {% else %}
+                <div class="p-6 mb-2 rounded-md">
+                <h2 class="text-2xl font-semibold">Вы не авторизованы!</h2>
+                <p class="text-xl text-gray-900">Готовы пройти тестирование? Тогды выбирайте тест и нажимайте на кнопку "Начать тест"</p>
+            </div>
+            {% endif %}
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 p-8 mb-2">
+                <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <div class="border-2 border-gray-300 border-solid flex flex-col rounded-md space-y-1.5 bg-gray-400 p-5 ">
+                        <h3 class="font-semibold text-xl break-word">Шкала депрессии Бэка (BDI)</h3>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-2">
+                            21 вопрос
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700">Тест позволяет определить уровень депресии.</p>
+                        <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-400 text-gray-900 hover:bg-gray-500 h-10 px-4 py-2 mt-4" onclick="window.location.href='{% url 'test' %}'">
+                            Начать тест
+                        </button>
+                    </div>
+                </div>
+                <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <div class="border-2 border-gray-300 border-solidflex flex-col rounded-md space-y-1.5 bg-red-500 p-6">
+                        <h3 class="font-semibold text-xl">Шкала тревоги Бека (BAI)</h3>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-2">
+                            21 вопрос
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700">Тест позволяет выявить уровень тревоги.</p>
+                        <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-red-500 text-gray-900 hover:bg-red-500 h-10 px-4 py-2 mt-4" onclick="window.location.href='{% url 'anxiety_test' %}'">
+                            Начать тест
+                        </button>
+                    </div>
+                </div>
+                <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <div class="border-2 border-gray-300 border-solid flex flex-col rounded-md space-y-1.5 bg-green-300 p-4 ">
+                        <h3 class="font-semibold text-xl break-word">Шкала самосострадания Кристин Нефф (SCS)</h3>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-2">
+                            26 вопросов
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700">Тест позволяет определить уровень самосострадания.</p>
+                        <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-300 text-gray-900 hover:bg-green-400 h-10 px-4 py-2 mt-4" onclick="window.location.href='{% url 'selfcompassion_test' %}'">
+                            Начать тест
+                        </button>
+                    </div>
+                </div>
+                <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <div class="border-2 border-gray-300 border-solid flex flex-col rounded-md space-y-1.5 bg-blue-300 p-4">
+                        <h3 class="font-semibold text-xl break-word">Шкала импульсивности Барратта (BIS-11)</h3>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-2">
+                            30 вопросов
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700">Тест дает оценку импульсивности и составляющих её факторов.</p>
+                        <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-300 text-gray-900 hover:bg-blue-400 h-10 px-4 py-2 mt-4" onclick="window.location.href='{% url 'impulsivity_test' %}'">
+                            Начать тест
+                        </button>
+                    </div>
+                </div>
+                <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <div class="border-2 border-gray-300 border-solid flex flex-col rounded-md space-y-1.5 bg-yellow-400 p-4">
+                        <h3 class="font-semibold text-xl break-word">Шкала оценки пищевого поведения (EDI)</h3>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 w-fit text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mt-2">
+                            51 вопрос
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-700">Эта шкала измеряет различные предпочтения, ощущения и поведение.</p>
+                        <button class="border-2 border-gray-300 border-solid custom-button inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-yellow-400 text-gray-900 hover:bg-yellow-500 h-10 px-4 py-2 mt-4" onclick="window.location.href='{% url 'foodbehavior_test' %}'">
+                            Начать тест
+                        </button>
+                    </div>
+                </div>
+                <button class="border-2 border-gray-300 border-solid custom-button resultButton inline-flex items-center justify-center rounded-md shadow-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 hover:bg-gray-400 h-15 px-4 py-2 mt-4"
+                        {% if user.is_authenticated %}
+                            onclick="window.location.href='{% url 'view_results' %}'"
+                        {% endif %}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-12 h-12 mr-2"
+                    >
+                      <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                      <path d="m9 14 2 2 4-4"></path>
+                    </svg>
+                            Результаты "Шкала депрессии Бэка"
+                </button>
+                <button class="border-2 border-gray-300 border-solid custom-button resultButton inline-flex items-center justify-center rounded-md shadow-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 hover:bg-red-500 h-15 px-4 py-2 mt-4"
+                        {% if user.is_authenticated %}
+                            onclick="window.location.href='{% url 'anxiety_view_results' %}'"
+                        {% endif %}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-12 h-12 mr-2"
+                    >
+                      <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                      <path d="m9 14 2 2 4-4"></path>
+                    </svg>
+                            Результаты "Шкала тревоги Бэка"
+                </button>
+                <button class="border-2 border-gray-300 border-solid custom-button resultButton inline-flex items-center justify-center rounded-md shadow-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 hover:bg-green-300 h-15 px-4 py-2 mt-4"
+                        {% if user.is_authenticated %}
+                            onclick="window.location.href='{% url 'selfcompassion_view_results' %}'"
+                        {% endif %}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-16 h-16 mr-2"
+                    >
+                      <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                      <path d="m9 14 2 2 4-4"></path>
+                    </svg>
+                            Результаты "Шкала самосострадания Кристин Нефф"
+                </button>
+                <button class="border-2 border-gray-300 border-solid custom-button resultButton inline-flex items-center justify-center rounded-md shadow-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 hover:bg-blue-300 h-15 px-4 py-2 mt-4"
+                        {% if user.is_authenticated %}
+                            onclick="window.location.href='{% url 'impulsivity_view_results' %}'"
+                        {% endif %}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-16 h-16 mr-1"
+                    >
+                      <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                      <path d="m9 14 2 2 4-4"></path>
+                    </svg>
+                            Результаты "Шкала импульсивности Барратта"
+                </button>
+                <button class="border-2 border-gray-300 border-solid custom-button resultButton inline-flex items-center justify-center rounded-md shadow-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 hover:bg-yellow-400 h-15 px-4 py-2 mt-4"
+                        {% if user.is_authenticated %}
+                            onclick="window.location.href='{% url 'foodbehavior_view_results' %}'"
+                        {% endif %}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-16 h-16 mr-2"
+                    >
+                      <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                      <path d="m9 14 2 2 4-4"></path>
+                    </svg>
+                            Результаты "Шкала оценки пищевого поведения"
+                </button>
+            </div>
+            <div class="text-center mt-2">
+                <h1 class="font-bold text-lg mb-4">КОНТАКТЫ</h1>
+            </div>
+                <div class="flex justify-center space-x-8 mb-12">
+                      <div class="custom-button text-center mt-2">
+                          <a href="mailto:1cbt.vysota@gmail.com">
+                        <svg class="text-gray-500 h-8 w-8 mx-auto mb-4"
+                             viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.69,12.06a1,1,0,0,1-1.34,0L2.87,4.35A2,2,0,0,1,4,4H20a2,2,0,0,1,1.13.35Z" fill="#464646"/><path d="M22,6.26V17a3,3,0,0,1-3,3H5a3,3,0,0,1-3-3V6.26l8.68,7.92a2,2,0,0,0,1.32.49,2,2,0,0,0,1.33-.51Z" fill="#464646"/>
+                        </svg>
+                        <h2 class="font-bold text-xs">1cbt.vysota@gmail.com</h2>
+                          </a>
+                      </div>
+                      <div class="custom-button text-center mt-2">
+                          <a href="tel:+78006005197">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#464646"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="text-gray-500 h-8 w-8 mx-auto mb-4"
+                        >
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <h2 class="font-bold text-xs">+7 (800) 600-51-97</h2>
+                          </a>
+                      </div>
+                      <div class="custom-button text-center mt-2">
+                          <a href="https://t.me/visotacent">
+                        <svg class="text-gray-500 h-8 w-8 mx-auto mb-4"
+                             height="512px"
+                             style="enable-background:new 0 0 512 512;"
+                             version="1.1" viewBox="0 0 512 512" width="512px"
+                             xml:space="preserve"
+                             xmlns="http://www.w3.org/2000/svg">
+                                <g id="_x33_35-telegram"><g><g>
+                                    <path d="M484.689,98.231l-69.417,327.37c-5.237,23.105-18.895,28.854-38.304,17.972L271.2,365.631     l-51.034,49.086c-5.646,5.647-10.371,10.372-21.256,10.372l7.598-107.722L402.539,140.23c8.523-7.598-1.848-11.809-13.247-4.21     L146.95,288.614L42.619,255.96c-22.694-7.086-23.104-22.695,4.723-33.579L455.423,65.166     C474.316,58.081,490.85,69.375,484.689,98.231z" style="fill:#464646;"/></g></g></g><g id="Layer_1"/>
+                        </svg>
+                        <h2 class="font-bold text-xs">TELEGRAM</h2>
+                          </a>
+                      </div>
+                      <div class="custom-button text-center mt-2">
+                          <a href="https://vk.com/visotacenter">
+                        <svg class="text-gray-500 h-8 w-8 mx-auto mb-4"
+                             height="512px"
+                             style="enable-background:new 0 0 512 512;"
+                             version="1.1" viewBox="0 0 512 512" width="512px"
+                             xml:space="preserve"
+                             xmlns="http://www.w3.org/2000/svg">
+                                <g id="_x31_7-vk"><g><g><g>
+                                    <path d="M250.895,391.347h28.514c0,0,8.615-0.952,13.004-5.709c4.059-4.364,3.904-12.563,3.904-12.563      s-0.563-38.366,17.213-44.022c17.508-5.562,39.994,37.091,63.824,53.506c18.014,12.406,31.707,9.688,31.707,9.688l63.736-0.899      c0,0,33.342-2.062,17.535-28.349c-1.279-2.148-9.215-19.437-47.391-54.968c-39.967-37.204-34.604-31.164,13.537-95.492      c29.32-39.175,41.045-63.101,37.373-73.329c-3.49-9.749-25.049-7.175-25.049-7.175l-71.705,0.421c0,0-5.311-0.721-9.273,1.643      c-3.854,2.33-6.328,7.716-6.328,7.716s-11.361,30.321-26.512,56.108c-31.945,54.394-44.736,57.267-49.959,53.884      c-12.141-7.862-9.094-31.642-9.094-48.508c0-52.726,7.965-74.704-15.539-80.385c-7.818-1.885-13.541-3.142-33.492-3.348      c-25.594-0.272-47.277,0.088-59.531,6.097c-8.174,4.009-14.47,12.953-10.622,13.459c4.743,0.629,15.479,2.9,21.178,10.679      c7.369,10.017,7.098,32.569,7.098,32.569s4.232,62.048-9.875,69.77c-9.695,5.292-22.962-5.509-51.448-54.883      c-14.583-25.267-25.618-53.233-25.618-53.233s-2.117-5.197-5.905-7.98c-4.594-3.381-11.039-4.453-11.039-4.453l-68.175,0.413      c0,0-10.234,0.305-13.992,4.754c-3.338,3.984-0.268,12.176-0.268,12.176S72.09,274.148,132.522,337.276      C187.965,395.146,250.895,391.347,250.895,391.347L250.895,391.347z M250.895,391.347" style="fill:#464646;"/></g></g></g></g><g id="Layer_1"/>
+                        </svg>
+                        <h2 class="font-bold text-xs">ВКОНТАКТЕ</h2>
+                              </a>
+                      </div>
+                      <div class="custom-button text-center mt-2">
+                          <a href="https://www.youtube.com/channel/UCI1FuUZKxVOq-dyIKa7lybg">
+                        <svg class="text-gray-500 h-8 w-8 mx-auto mb-4"
+                             height="512px" style="enable-background:new 0 0 512 512;"
+                             version="1.1" viewBox="0 0 512 512" width="512px"
+                             xml:space="preserve"
+                             xmlns="http://www.w3.org/2000/svg">
+                                <g id="_x33_95-youtube"><g>
+                                    <path d="M476.387,144.888c-5.291-19.919-20.878-35.608-40.67-40.933C399.845,94.282,256,94.282,256,94.282    s-143.845,0-179.719,9.674c-19.791,5.325-35.378,21.013-40.668,40.933c-9.612,36.105-9.612,111.438-9.612,111.438    s0,75.334,9.612,111.438c5.29,19.92,20.877,34.955,40.668,40.281C112.155,417.719,256,417.719,256,417.719    s143.845,0,179.717-9.674c19.792-5.326,35.379-20.361,40.67-40.281c9.612-36.104,9.612-111.438,9.612-111.438    S485.999,180.994,476.387,144.888z" style="fill:#464646;"/><polygon points="208.954,324.723 208.954,187.93 329.18,256.328   " style="fill:#FFFFFF;"/></g></g><g id="Layer_1"/>
+                        </svg>
+                        <h2 class="font-bold text-xs">YOUTUBE</h2>
+                          </a>
+                </div>
+    </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('.resultButton');
+
+    buttons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Проверяем статус авторизации
+        var userIsAuthenticated = {{ request.user.is_authenticated|lower }};
+
+        // Очищаем предыдущие настройки подсказки
+        button.classList.remove('hint--top');
+
+        if (!userIsAuthenticated) {
+          // Применяем подсказку
+          button.classList.add('hint--top');
+          button.setAttribute('aria-label', 'Для просмотра результатов пожалуйста, авторизуйтесь!');
+          button.classList.add('hint');
+          button.classList.add('hint-multiline');
+          button.classList.add('hint--rounded');
+          button.classList.add('hint--info');
+        }
+      });
+    });
+  });
+</script>
+
+        {% endblock %}
+    </main>
+    <script src="{% static 'main.js' %}"></script>
+</body>
+</html>
+

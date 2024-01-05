@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load filter_off %}
+  <div class="container mx-auto p-6 md:p-10">
+    <div class="border bg-card text-card-foreground rounded-md shadow-xl max-w-xl mx-auto" data-v0-t="card">
+      <h1 class="bg-blue-500 text-white rounded-md text-3xl font-bold px-6 py-4 flex items-center justify-center">Результаты теста</h1>
+      <div class="flex flex-col space-y-1.5 p-4">
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">Ваш результат:</div>
+            <p class="text-gray-700 text-lg">Доброта к себе: {{ kindness_average }} балл{{ kindness_average|ru_plural:"ов,а,ов" }}</p>
+            <p class="text-gray-700 text-lg">Самоосуждение: {{ self_blame_average }} балл{{ self_blame_average|ru_plural:"ов,а,ов" }}</p>
+            <p class="text-gray-700 text-lg">Человеческая общность: {{ human_commonality_average }} балл{{ human_commonality_average|ru_plural:"ов,а,ов" }}</p>
+            <p class="text-gray-700 text-lg">Изоляция: {{ isolation_average }} балл{{ isolation_average|ru_plural:"ов,а,ов" }}</p>
+            <p class="text-gray-700 text-lg">Осознанность: {{ mindfulness_average }} балл{{ mindfulness_average|ru_plural:"ов,а,ов" }}</p>
+            <p class="text-gray-700 text-lg">Сверхидентификация: {{ overidentification_average }} балл{{ overidentification_average|ru_plural:"ов,а,ов" }}</p>
+            <p class="text-gray-700 text-lg">Общий балл: {{ total_score }} балл{{ total_score|ru_plural:"ов,а,ов" }}</p>
+        </div>
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">Описание результата:</div>
+          <p class="text-gray-700 text-lg">{{ result_message }}</p>
+        </div>
+      </div>
+    </div>
+      <div class="flex flex-col items-center text-center mb-2">
+          <a class="border-2 border-gray-300 border-solid inline-flex  max-w-xl items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-600 h-10 px-4 py-2 bg-blue-500 text-white w-full mt-4" href="{% url 'selfcompassion_view_results' %}">Посмотреть все результаты</a>
+          <a class="border-2 border-gray-300 border-solid inline-flex  max-w-xl items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-600 h-10 px-4 py-2 bg-blue-500 text-white w-full mt-4" href="{% url 'home' %}">На главную страницу</a>
+      </div>
+  </div>
+{% endblock %}

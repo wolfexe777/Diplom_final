@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты теста</title>
+</head>
+<body>
+    <h2>Результаты теста "Шкала оценки пищевого поведения (EDI)"</h2>
+
+    <p>Привет!</p>
+
+    <p>Ваши результаты:</p>
+    <ul>
+        <li>Стремление к худобе: {{ result.thinness_striving_stenain }}</li>
+        <li>Булимия: {{ result.bulimia_stenain }}</li>
+        <li>Неудовлетворенность телом: {{ result.body_dissatisfaction_stenain }}</li>
+        <li>Неэффективность: {{ result.ineffectiveness_stenain }}</li>
+        <li>Перфекционизм: {{ result.perfectionism_stenain }}</li>
+        <li>Недоверие в межличностных отношениях: {{ result.interpersonal_distrust_stenain }}</li>
+        <li>Интероцептивная некомпетентность: {{ result.interoceptive_incompetence_stenain }}</li>
+    </ul>
+    <p>Описание результата: {{ result.result_message }}</p>
+
+    <p>Спасибо за прохождение теста!</p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты теста</title>
+</head>
+<body>
+    <h2>Результаты теста "Шкала самосострадания Кристин Нефф (SCS)"</h2>
+    <p>Привет!</p>
+
+    <p>Ваши результаты:</p>
+
+<ul>
+    <li>Доброта: {{ scores.kindness_average }} баллов</li>
+    <li>Самокритика: {{ scores.self_blame_average }} баллов</li>
+    <li>Общность с человечеством: {{ scores.human_commonality_average }} баллов</li>
+    <li>Изоляция: {{ scores.isolation_average }} баллов</li>
+    <li>Наставничество: {{ scores.mindfulness_average }} баллов</li>
+    <li>Слияние с эмоциями: {{ scores.overidentification_average }} баллов</li>
+</ul>
+<p>Общий балл: {{ scores.total_score }} баллов</p>
+<p>Описание результата: {{ result_message }}</p>
+
+    <p>Спасибо за прохождение теста!</p>
+</body>
+</html>
