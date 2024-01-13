@@ -25,7 +25,7 @@ class FoodbehaviorTestChoiceInline(admin.TabularInline):
     extra = 0
 
 class QuestionAdmin(admin.ModelAdmin):
-    actions_on_top = False
+    # actions_on_top = False
     inlines = [ChoiceInline]
     actions = ['delete_with_choices']
 
@@ -39,7 +39,7 @@ admin.site.register(Question, QuestionAdmin)
 
 
 class AnxietyTestQuestionAdmin(admin.ModelAdmin):
-    actions_on_top = False
+    # actions_on_top = False
     inlines = [AnxietyTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -53,7 +53,7 @@ admin.site.register(AnxietyTestQuestion, AnxietyTestQuestionAdmin)
 
 
 class ImpulsivityTestQuestionAdmin(admin.ModelAdmin):
-    actions_on_top = False
+    # actions_on_top = False
     inlines = [ImpulsivityTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -75,7 +75,7 @@ class ImpulsivityTestQuestionAdmin(admin.ModelAdmin):
 admin.site.register(ImpulsivityTestQuestion, ImpulsivityTestQuestionAdmin)
 
 class SelfcompassionTestQuestionAdmin(admin.ModelAdmin):
-    actions_on_top = False
+    # actions_on_top = False
     inlines = [SelfcompassionTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -95,7 +95,7 @@ admin.site.register(SelfcompassionTestQuestion, SelfcompassionTestQuestionAdmin)
 
 
 class FoodbehaviorTestQuestionAdmin(admin.ModelAdmin):
-    actions_on_top = False
+    # actions_on_top = False
     inlines = [FoodbehaviorTestChoiceInline]
     actions = ['delete_with_choices']
 

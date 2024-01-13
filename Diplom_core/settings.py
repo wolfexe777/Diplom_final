@@ -39,10 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'webpack_loader',
-    'django_dump_load_utf8',
-    'django_rename_app',
     'PsichologyTest',
-
 ]
 
 MIDDLEWARE = [
@@ -136,6 +133,12 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'Wolfexe@yandex.ru'
 EMAIL_HOST_PASSWORD = 'Rtreibyrfq10'
+DEFAULT_FROM_EMAIL = 'Wolfexe@yandex.ru'
+
+# Настройки для восстановления пароля
+PASSWORD_RESET_TIMEOUT_DAYS = 1
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24  # 1 day, in seconds
+# PASSWORD_RESET_TEMPLATE = 'PsichologyTest/password_reset_form.html'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

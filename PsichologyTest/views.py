@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Question, Choice, TestResult, FoodbehaviorTestQuestion, FoodbehaviorTestChoice, FoodbehaviorTestResult, AnxietyTestQuestion, AnxietyTestChoice, AnxietyTestResult, ImpulsivityTestQuestion, ImpulsivityTestChoice, ImpulsivityTestResult, SelfcompassionTestQuestion, SelfcompassionTestChoice, SelfcompassionTestResult
 from .forms import CustomUserCreationForm
@@ -13,6 +12,14 @@ import base64
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
 
@@ -921,7 +928,6 @@ def foodbehavior_enter_email(request):
                 print(e)  # Выводим ошибку в консоль для отладки
                 messages.error(request, 'Ошибка отправки письма. Пожалуйста, попробуйте еще раз.')
                 return redirect('foodbehavior_enter_email')
-
     return render(request, 'PsichologyTest/foodbehavior_enter_email.html')
 
 
@@ -982,3 +988,42 @@ def foodbehavior_send_email(email, user, result_message, result):
 
     # Отправляем электронное письмо
     send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)
+
+
+def password_reset_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        if not email:
+            messages.error(request, 'Введите адрес электронной почты')
+            return render(request, 'PsichologyTest/password_reset_form.html')
+
+        User = get_user_model()
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, 'Пользователь с таким адресом электронной почты не найден.')
+            return render(request, 'PsichologyTest/password_reset_form.html')
+
+        # Генерация токена для сброса пароля
+        token = default_token_generator.make_token(user)
+
+        # Формирование URL для сброса пароля
+        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        reset_url = f"http://{request.get_host()}/reset/{uidb64}/{token}/"
+
+        # Текст сообщения с ссылкой на сброс пароля
+        message = f'Ваш запрос на сброс пароля был получен. Пройдите по ссылке {reset_url} для сброса пароля.'
+
+        # Отправка письма с инструкциями по сбросу пароля
+        subject = 'Инструкции по сбросу пароля'
+        from_email = 'Wolfexe@yandex.ru'  # Замените на свой email
+        recipient_list = [user.email]
+
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+        messages.success(request, 'Инструкции по сбросу пароля отправлены на ваш адрес электронной почты')
+        return render(request, 'PsichologyTest/password_reset_done.html')
+
+    return render(request, 'PsichologyTest/password_reset_form.html')
