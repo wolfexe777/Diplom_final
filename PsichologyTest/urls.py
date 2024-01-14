@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import home, test, signup, user_login, user_logout, impulsivity_enter_email,\
+from .views import home, test, signup, user_login, user_logout, enter_email, impulsivity_enter_email,\
 anxiety_enter_email, impulsivity_offer_save_result, view_results,impulsivity_view_results,\
 impulsivity_test, anxiety_offer_save_result, anxiety_view_results,\
-offer_save_result, anxiety_test, enter_email, selfcompassion_test, selfcompassion_enter_email,\
+offer_save_result, anxiety_test, selfcompassion_test, selfcompassion_enter_email,\
 selfcompassion_offer_save_result, selfcompassion_view_results, foodbehavior_test,\
 foodbehavior_offer_save_result, foodbehavior_enter_email, foodbehavior_view_results, password_reset_view
 import os

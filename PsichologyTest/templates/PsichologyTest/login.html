@@ -24,13 +24,13 @@
       {% endif %}
       <form method="post">
         {% csrf_token %}
-        <input class="border rounded w-full p-2" placeholder="Username" aria-label="Username" type="text" name="username" />
+        <input class="border rounded w-full p-2" placeholder="Login" aria-label="Username" type="text" name="username" />
         <input class="border rounded w-full p-2" placeholder="Password" aria-label="Password" type="password" name="password" />
         <button class="border-2 border-gray-300 border-solid inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-blue-600 h-10 px-4 py-2 bg-blue-500 text-white w-full mt-4" type="submit">
           Войти
         </button>
       </form>
-      <a class="border-2 border-gray-300 border-solid max-w-sm mx-auto inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-600 h-10 px-4 py-2 bg-red-500 text-white w-full mt-2" href="{% url 'home' %}">Отмена</a>
+      <a class="border-2 border-gray-300 border-solid max-w-sm mx-auto inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-red-600 h-10 px-4 py-2 bg-red-500 text-white w-full mt-2" href="{% url 'home' %}">Отмена</a>
       <a class="text-center text-blue-500 pl-2" href="{% url 'password_reset' %}">Забыли пароль?</a>
     </div>
   </div>

@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from .models import Question, Choice, TestResult, FoodbehaviorTestQuestion, FoodbehaviorTestChoice, FoodbehaviorTestResult, AnxietyTestQuestion, AnxietyTestChoice, AnxietyTestResult, ImpulsivityTestQuestion, ImpulsivityTestChoice, ImpulsivityTestResult, SelfcompassionTestQuestion, SelfcompassionTestChoice, SelfcompassionTestResult
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -9,15 +8,12 @@ import numpy as np
 matplotlib.use('Agg')
 from io import BytesIO
 import base64
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.contrib import messages
-from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import get_user_model
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -40,16 +36,16 @@ def test(request):
         # Если пользователь не авторизован, предложить сохранить результаты
         if not request.user.is_authenticated:
             request.session['test_result'] = {'score': score, 'result_message': result_message}
-            return render(request, 'PsichologyTest/offer_save_result.html', {'score': score, 'result_message': result_message})
+            return render(request, 'PsichologyTest/BeckDepression/offer_save_result.html', {'score': score, 'result_message': result_message})
 
         # Если пользователь авторизован, сохраняем результаты в базе данных
         TestResult.objects.create(user=request.user, score=score, result_message=result_message)
 
         # Вместо вызова функции test_results, возвращаем рендеринг страницы с результатами
-        return render(request, 'PsichologyTest/test_results.html', {'score': score, 'result_message': result_message})
+        return render(request, 'PsichologyTest/BeckDepression/test_results.html', {'score': score, 'result_message': result_message})
 
     questions = Question.objects.all()
-    return render(request, 'PsichologyTest/test.html', {'questions': questions})
+    return render(request, 'PsichologyTest/BeckDepression/test.html', {'questions': questions})
 
 def anxiety_test(request):
     if request.method == 'POST':
@@ -65,16 +61,16 @@ def anxiety_test(request):
         # Если пользователь не авторизован, предложить сохранить результаты
         if not request.user.is_authenticated:
             request.session['test_result'] = {'score': score, 'result_message': result_message}
-            return render(request, 'PsichologyTest/anxiety_offer_save_result.html', {'score': score, 'result_message': result_message})
+            return render(request, 'PsichologyTest/BeckAnxiety/anxiety_offer_save_result.html', {'score': score, 'result_message': result_message})
 
         # Если пользователь авторизован, сохраняем результаты в базе данных
         AnxietyTestResult.objects.create(user=request.user, score=score, result_message=result_message)
 
         # Вместо вызова функции test_results, возвращаем рендеринг страницы с результатами
-        return render(request, 'PsichologyTest/anxiety_test_results.html', {'score': score, 'result_message': result_message})
+        return render(request, 'PsichologyTest/BeckAnxiety/anxiety_test_results.html', {'score': score, 'result_message': result_message})
 
     questions = AnxietyTestQuestion.objects.all()
-    return render(request, 'PsichologyTest/anxiety_test.html', {'questions': questions})
+    return render(request, 'PsichologyTest/BeckAnxiety/anxiety_test.html', {'questions': questions})
 
 
 def impulsivity_test(request):
@@ -98,16 +94,16 @@ def impulsivity_test(request):
         # Если пользователь не авторизован, предложить сохранить результаты
         if not request.user.is_authenticated:
             request.session['test_result'] = {'score': score, 'result_message': result_message}
-            return render(request, 'PsichologyTest/impulsivity_offer_save_result.html', {'score': score, 'result_message': result_message})
+            return render(request, 'PsichologyTest/Impulsivity/impulsivity_offer_save_result.html', {'score': score, 'result_message': result_message})
 
         # Если пользователь авторизован, сохраняем результаты в базе данных
         ImpulsivityTestResult.objects.create(user=request.user, score=score, result_message=result_message)
 
         # Вместо вызова функции test_results, возвращаем рендеринг страницы с результатами
-        return render(request, 'PsichologyTest/impulsivity_test_results.html', {'score': score, 'result_message': result_message})
+        return render(request, 'PsichologyTest/Impulsivity/impulsivity_test_results.html', {'score': score, 'result_message': result_message})
 
     questions = ImpulsivityTestQuestion.objects.all()
-    return render(request, 'PsichologyTest/impulsivity_test.html', {'questions': questions})
+    return render(request, 'PsichologyTest/Impulsivity/impulsivity_test.html', {'questions': questions})
 
 
 def selfcompassion_test(request):
@@ -170,7 +166,7 @@ def selfcompassion_test(request):
                 'total_score': total_score,
                 'result_message': result_message
             }
-            return render(request, 'PsichologyTest/selfcompassion_offer_save_result.html', {
+            return render(request, 'PsichologyTest/Selfcompassion/selfcompassion_offer_save_result.html', {
                 'kindness_average': kindness_average,
                 'self_blame_average': self_blame_average,
                 'human_commonality_average': human_commonality_average,
@@ -194,7 +190,7 @@ def selfcompassion_test(request):
             result_message=result_message
         )
         # Вместо вызова функции test_results, возвращаем рендеринг страницы с результатами
-        return render(request, 'PsichologyTest/selfcompassion_test_results.html', {
+        return render(request, 'PsichologyTest/Selfcompassion/selfcompassion_test_results.html', {
             'kindness_average': kindness_average,
             'self_blame_average': self_blame_average,
             'human_commonality_average': human_commonality_average,
@@ -206,7 +202,7 @@ def selfcompassion_test(request):
         })
 
     questions = SelfcompassionTestQuestion.objects.all()
-    return render(request, 'PsichologyTest/selfcompassion_test.html', {'questions': questions})
+    return render(request, 'PsichologyTest/Selfcompassion/selfcompassion_test.html', {'questions': questions})
 
 
 def calculate_stenain(score, score_ranges):
@@ -336,7 +332,7 @@ def foodbehavior_test(request):
                 'result_message': result_message
             }
 
-            return render(request, 'PsichologyTest/foodbehavior_offer_save_results.html', {
+            return render(request, 'PsichologyTest/FoodBehavior/foodbehavior_offer_save_results.html', {
                 'thinness_striving_score': thinness_striving_score,
                 'thinness_striving_stenain': thinness_striving_stenain,
                 'bulimia_score': bulimia_score,
@@ -372,7 +368,7 @@ def foodbehavior_test(request):
             interoceptive_incompetence_score=interoceptive_incompetence_score,
             interoceptive_incompetence_stenain=interoceptive_incompetence_stenain
         )
-        return render(request, 'PsichologyTest/foodbehavior_test_results.html', {
+        return render(request, 'PsichologyTest/FoodBehavior/foodbehavior_test_results.html', {
             'thinness_striving_score': thinness_striving_score,
             'thinness_striving_stenain': thinness_striving_stenain,
             'bulimia_score': bulimia_score,
@@ -391,7 +387,7 @@ def foodbehavior_test(request):
         })
 
     questions = FoodbehaviorTestQuestion.objects.all()
-    return render(request, 'PsichologyTest/foodbehavior_test.html', {'questions': questions})
+    return render(request, 'PsichologyTest/FoodBehavior/foodbehavior_test.html', {'questions': questions})
 
 
 def offer_save_result(request):
@@ -407,7 +403,7 @@ def offer_save_result(request):
             # Если пользователь хочет отправить результаты на электронную почту, перенаправляем на страницу ввода адреса
             return redirect('enter_email')
 
-    return render(request, 'PsichologyTest/offer_save_result.html')
+    return render(request, 'PsichologyTest/BeckDepression/offer_save_result.html')
 
 def anxiety_offer_save_result(request):
     if request.method == 'POST':
@@ -422,7 +418,7 @@ def anxiety_offer_save_result(request):
             # Если пользователь хочет отправить результаты на электронную почту, перенаправляем на страницу ввода адреса
             return redirect('anxiety_enter_email')
 
-    return render(request, 'PsichologyTest/anxiety_offer_save_result.html')
+    return render(request, 'PsichologyTest/BeckAnxiety/anxiety_offer_save_result.html')
 
 
 def impulsivity_offer_save_result(request):
@@ -438,7 +434,7 @@ def impulsivity_offer_save_result(request):
             # Если пользователь хочет отправить результаты на электронную почту, перенаправляем на страницу ввода адреса
             return redirect('impulsivity_enter_email')
 
-    return render(request, 'PsichologyTest/impulsivity_offer_save_result.html')
+    return render(request, 'PsichologyTest/Impulsivity/impulsivity_offer_save_result.html')
 
 def selfcompassion_offer_save_result(request):
     if request.method == 'POST':
@@ -453,7 +449,7 @@ def selfcompassion_offer_save_result(request):
             # Если пользователь хочет отправить результаты на электронную почту, перенаправляем на страницу ввода адреса
             return redirect('selfcompassion_enter_email')
 
-    return render(request, 'PsichologyTest/selfcompassion_offer_save_result.html')
+    return render(request, 'PsichologyTest/Selfcompassion/selfcompassion_offer_save_result.html')
 
 def foodbehavior_offer_save_result(request):
     if request.method == 'POST':
@@ -468,7 +464,7 @@ def foodbehavior_offer_save_result(request):
             # Если пользователь хочет отправить результаты на электронную почту, перенаправляем на страницу ввода адреса
             return redirect('foodbehavior_enter_email')
 
-    return render(request, 'PsichologyTest/foodbehavior_offer_save_result.html')
+    return render(request, 'PsichologyTest/FoodBehavior/foodbehavior_offer_save_result.html')
 
 def get_result_message(score):
     if score <= 9:
@@ -606,7 +602,7 @@ def view_results(request):
     image_base64 = base64.b64encode(image_stream.getvalue()).decode('utf-8')
 
     # Отправляем изображение и результаты в шаблон
-    return render(request, 'PsichologyTest/view_results.html',
+    return render(request, 'PsichologyTest/BeckDepression/view_results.html',
                   {'test_results': test_results, 'image_base64': image_base64})
 
 def anxiety_view_results(request):
@@ -655,7 +651,7 @@ def anxiety_view_results(request):
     image_base64 = base64.b64encode(image_stream.getvalue()).decode('utf-8')
 
     # Отправляем изображение и результаты в шаблон
-    return render(request, 'PsichologyTest/anxiety_view_results.html',
+    return render(request, 'PsichologyTest/BeckAnxiety/anxiety_view_results.html',
                   {'test_results': test_results, 'image_base64': image_base64})
 
 
@@ -705,7 +701,7 @@ def impulsivity_view_results(request):
     image_base64 = base64.b64encode(image_stream.getvalue()).decode('utf-8')
 
     # Отправляем изображение и результаты в шаблон
-    return render(request, 'PsichologyTest/impulsivity_view_results.html',
+    return render(request, 'PsichologyTest/Impulsivity/impulsivity_view_results.html',
                   {'test_results': test_results, 'image_base64': image_base64})
 
 
@@ -771,7 +767,7 @@ def selfcompassion_view_results(request):
     image_base64 = base64.b64encode(image_stream.getvalue()).decode('utf-8')
 
     # Отправляем изображение и результаты в шаблон
-    return render(request, 'PsichologyTest/selfcompassion_view_results.html',
+    return render(request, 'PsichologyTest/Selfcompassion/selfcompassion_view_results.html',
                   {'test_results': test_results, 'image_base64': image_base64})
 
 
@@ -818,7 +814,7 @@ def foodbehavior_view_results(request):
             ax.text(bar.get_x() + bar.get_width() / 2, height / 2, str(int(stenain_value)),
                     ha='center', va='center', fontsize=10, color='black')
 
-    # Убираем линии справа и сверху
+    # Убираем линии
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
     ax.yaxis.set_visible(False)
@@ -837,7 +833,7 @@ def foodbehavior_view_results(request):
     image_base64 = base64.b64encode(image_stream.getvalue()).decode('utf-8')
 
     # Отправляем изображение и результаты в шаблон
-    return render(request, 'PsichologyTest/foodbehavior_view_results.html',
+    return render(request, 'PsichologyTest/FoodBehavior/foodbehavior_view_results.html',
                   {'test_results': test_results, 'image_base64': image_base64})
 
 
@@ -855,7 +851,7 @@ def enter_email(request):
                 messages.error(request, 'Ошибка отправки письма. Пожалуйста, попробуйте еще раз.')
                 return redirect('enter_email')
 
-    return render(request, 'PsichologyTest/enter_email.html')
+    return render(request, 'PsichologyTest/BeckDepression/enter_email.html')
 
 def anxiety_enter_email(request):
     if request.method == 'POST':
@@ -871,7 +867,7 @@ def anxiety_enter_email(request):
                 messages.error(request, 'Ошибка отправки письма. Пожалуйста, попробуйте еще раз.')
                 return redirect('anxiety_enter_email')
 
-    return render(request, 'PsichologyTest/anxiety_enter_email.html')
+    return render(request, 'PsichologyTest/BeckAnxiety/anxiety_enter_email.html')
 
 def impulsivity_enter_email(request):
     if request.method == 'POST':
@@ -887,7 +883,7 @@ def impulsivity_enter_email(request):
                 messages.error(request, 'Ошибка отправки письма. Пожалуйста, попробуйте еще раз.')
                 return redirect('impulsivity_enter_email')
 
-    return render(request, 'PsichologyTest/impulsivity_enter_email.html')
+    return render(request, 'PsichologyTest/Impulsivity/impulsivity_enter_email.html')
 
 def selfcompassion_enter_email(request):
     if request.method == 'POST':
@@ -913,7 +909,7 @@ def selfcompassion_enter_email(request):
                 messages.error(request, 'Ошибка отправки письма. Пожалуйста, попробуйте еще раз.')
                 return redirect('selfcompassion_enter_email')
 
-    return render(request, 'PsichologyTest/selfcompassion_enter_email.html')
+    return render(request, 'PsichologyTest/Selfcompassion/selfcompassion_enter_email.html')
 def foodbehavior_enter_email(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -928,13 +924,13 @@ def foodbehavior_enter_email(request):
                 print(e)  # Выводим ошибку в консоль для отладки
                 messages.error(request, 'Ошибка отправки письма. Пожалуйста, попробуйте еще раз.')
                 return redirect('foodbehavior_enter_email')
-    return render(request, 'PsichologyTest/foodbehavior_enter_email.html')
+    return render(request, 'PsichologyTest/FoodBehavior/foodbehavior_enter_email.html')
 
 
 def send_email(email, user, score, result_message):
     subject = 'Результаты теста'
     message = f'Ваш результат: {score}\nСообщение: {result_message}'
-    html_message = render_to_string('PsichologyTest/email_template.html', {'user': user, 'score': score, 'result_message': result_message})
+    html_message = render_to_string('PsichologyTest/BeckDepression/email_template.html', {'user': user, 'score': score, 'result_message': result_message})
     plain_message = strip_tags(html_message)
     from_email = 'wolfexe@yandex.ru'
     recipient_list = [email]
@@ -945,7 +941,7 @@ def send_email(email, user, score, result_message):
 def anxiety_send_email(email, user, score, result_message):
     subject = 'Результаты теста'
     message = f'Ваш результат: {score}\nСообщение: {result_message}'
-    html_message = render_to_string('PsichologyTest/anxiety_email_template.html', {'user': user, 'score': score, 'result_message': result_message})
+    html_message = render_to_string('PsichologyTest/BeckAnxiety/anxiety_email_template.html', {'user': user, 'score': score, 'result_message': result_message})
     plain_message = strip_tags(html_message)
     from_email = 'wolfexe@yandex.ru'
     recipient_list = [email]
@@ -956,7 +952,7 @@ def anxiety_send_email(email, user, score, result_message):
 def impulsivity_send_email(email, user, score, result_message):
     subject = 'Результаты теста'
     message = f'Ваш результат: {score}\nСообщение: {result_message}'
-    html_message = render_to_string('PsichologyTest/impulsivity_email_template.html', {'user': user, 'score': score, 'result_message': result_message,})
+    html_message = render_to_string('PsichologyTest/Impulsivity/impulsivity_email_template.html', {'user': user, 'score': score, 'result_message': result_message,})
     plain_message = strip_tags(html_message)
     from_email = 'wolfexe@yandex.ru'
     recipient_list = [email]
@@ -966,7 +962,7 @@ def impulsivity_send_email(email, user, score, result_message):
 
 def selfcompassion_send_email(email, user, result_message, scores):
     subject = 'Результаты теста'
-    html_message = render_to_string('PsichologyTest/selfcompassion_email_template.html', {
+    html_message = render_to_string('PsichologyTest/Selfcompassion/selfcompassion_email_template.html', {
         'user': user,
         'result_message': result_message,
         'scores': scores  # Передаем оценки в виде словаря
@@ -981,7 +977,7 @@ def selfcompassion_send_email(email, user, result_message, scores):
 def foodbehavior_send_email(email, user, result_message, result):
     subject = 'Результаты теста'
     result_message = f'Ваш результат: {result_message}'
-    html_message = render_to_string('PsichologyTest/foodbehavior_email_template.html', {'user': user, 'result_message': result_message, 'result': result})
+    html_message = render_to_string('PsichologyTest/FoodBehavior/foodbehavior_email_template.html', {'user': user, 'result_message': result_message, 'result': result})
     plain_message = strip_tags(html_message)
     from_email = 'wolfexe@yandex.ru'
     recipient_list = [email]
@@ -996,7 +992,7 @@ def password_reset_view(request):
 
         if not email:
             messages.error(request, 'Введите адрес электронной почты')
-            return render(request, 'PsichologyTest/password_reset_form.html')
+            return render(request, 'PsichologyTest/PasswordReset/password_reset_form.html')
 
         User = get_user_model()
 
@@ -1004,7 +1000,7 @@ def password_reset_view(request):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request, 'Пользователь с таким адресом электронной почты не найден.')
-            return render(request, 'PsichologyTest/password_reset_form.html')
+            return render(request, 'PsichologyTest/PasswordReset/password_reset_form.html')
 
         # Генерация токена для сброса пароля
         token = default_token_generator.make_token(user)
@@ -1014,16 +1010,15 @@ def password_reset_view(request):
         reset_url = f"http://{request.get_host()}/reset/{uidb64}/{token}/"
 
         # Текст сообщения с ссылкой на сброс пароля
-        message = f'Ваш запрос на сброс пароля был получен. Пройдите по ссылке {reset_url} для сброса пароля.'
+        message = f'Ваш запрос на изменение пароля был получен. Пройдите по ссылке {reset_url} для сброса пароля.'
 
         # Отправка письма с инструкциями по сбросу пароля
-        subject = 'Инструкции по сбросу пароля'
-        from_email = 'Wolfexe@yandex.ru'  # Замените на свой email
+        subject = 'Инструкция по сбросу пароля'
+        from_email = 'Wolfexe@yandex.ru'
         recipient_list = [user.email]
 
         send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-        messages.success(request, 'Инструкции по сбросу пароля отправлены на ваш адрес электронной почты')
-        return render(request, 'PsichologyTest/password_reset_done.html')
+        return render(request, 'PsichologyTest/PasswordReset/password_reset_done.html')
 
-    return render(request, 'PsichologyTest/password_reset_form.html')
+    return render(request, 'PsichologyTest/PasswordReset/password_reset_form.html')
