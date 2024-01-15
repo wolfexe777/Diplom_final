@@ -50,34 +50,34 @@
               </div>
           </form>
                 {% if messages %}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var messages = [];
-    {% for message in messages %}
-      messages.push({
-        message: "{{ message }}",
-        tags: "{{ message.tags }}",
-      });
-    {% endfor %}
+                    <script>
+                      document.addEventListener('DOMContentLoaded', function () {
+                        var messages = [];
+                        {% for message in messages %}
+                          messages.push({
+                            message: "{{ message }}",
+                            tags: "{{ message.tags }}",
+                          });
+                        {% endfor %}
 
-    var messageText = messages.map(function(msg) { return msg.message; }).join('');
+                        var messageText = messages.map(function(msg) { return msg.message; }).join('');
 
-    var isSuccess = messages.length > 0 && messages[0].tags.includes("success");
+                        var isSuccess = messages.length > 0 && messages[0].tags.includes("success");
 
-    Swal.fire({
-      icon: (isSuccess) ? "success" : "error",
-      title: (isSuccess) ? "Письмо успешно отправлено" : messageText,
-      showConfirmButton: false,
-      timer: 4000,
-      customClass: 'enter-email',
-      backdrop: false,
-          }).then(function() {
-      // Переход на главную страницу
-      window.location.href = '{% url "home" %}';
-    });
-  });
-</script>
-                {% endif %}
+                        Swal.fire({
+                          icon: (isSuccess) ? "success" : "error",
+                          title: (isSuccess) ? "Письмо успешно отправлено" : messageText,
+                          showConfirmButton: false,
+                          timer: 4000,
+                          customClass: 'enter-email',
+                          backdrop: false,
+                              }).then(function() {
+                          // Переход на главную страницу
+                          window.location.href = '{% url "home" %}';
+                        });
+                      });
+                    </script>
+            {% endif %}
         </div>
       </div>
   </main>

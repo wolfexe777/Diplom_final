@@ -37,17 +37,16 @@
       </a>
     </div>
   </form>
+    <script>
+      document.getElementById('yes-button').addEventListener('click', function(event) {
+        event.preventDefault();
 
-  <script>
-    document.getElementById('yes-button').addEventListener('click', function(event) {
-      event.preventDefault();
+        // Скрываем форму
+        document.getElementById('result-form').style.display = 'none';
 
-      // Скрываем форму
-      document.getElementById('result-form').style.display = 'none';
-
-      // Показываем контейнер с сообщением
-      document.getElementById('message-container').classList.remove('hidden');
-    });
-  </script>
+        // Показываем контейнер с сообщением
+        document.getElementById('message-container').classList.remove('hidden');
+      });
+    </script>
   </div>
 {% endblock %}

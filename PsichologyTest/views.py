@@ -395,7 +395,7 @@ def offer_save_result(request):
         save_result_choice = request.POST.get('save_result_choice')
 
         if save_result_choice == 'yes':
-            pass # Отрабатывает скрипт вхрод в аккаунт или регистрация
+            pass # Отрабатывает скрипт вход в аккаунт или регистрация
         if save_result_choice == 'no':
             # Если пользователь отказывается, перенаправляем на главную страницу
             return redirect('home')
@@ -410,7 +410,7 @@ def anxiety_offer_save_result(request):
         save_result_choice = request.POST.get('save_result_choice')
 
         if save_result_choice == 'yes':
-            pass # Отрабатывает скрипт вхрод в аккаунт или регистрация
+            pass # Отрабатывает скрипт вход в аккаунт или регистрация
         elif save_result_choice == 'no':
             # Если пользователь отказывается, перенаправляем на главную страницу
             return redirect('home')
@@ -426,7 +426,7 @@ def impulsivity_offer_save_result(request):
         save_result_choice = request.POST.get('save_result_choice')
 
         if save_result_choice == 'yes':
-            pass  # Отрабатывает скрипт вхрод в аккаунт или регистрация
+            pass  # Отрабатывает скрипт вход в аккаунт или регистрация
         elif save_result_choice == 'no':
             # Если пользователь отказывается, перенаправляем на главную страницу
             return redirect('home')
@@ -456,7 +456,7 @@ def foodbehavior_offer_save_result(request):
         save_result_choice = request.POST.get('save_result_choice')
 
         if save_result_choice == 'yes':
-            pass  # Отрабатывает скрипт вхрод в аккаунт или регистрация
+            pass  # Отрабатывает скрипт вход в аккаунт или регистрация
         elif save_result_choice == 'no':
             # Если пользователь отказывается, перенаправляем на главную страницу
             return redirect('home')
