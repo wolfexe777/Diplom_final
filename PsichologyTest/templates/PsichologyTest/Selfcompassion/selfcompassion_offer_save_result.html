@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Сохранить результат теста?{% endblock %}
+{% block title %}Результаты теста{% endblock %}
 
 {% block content %}
 {% load filter_off %}
@@ -26,7 +26,7 @@
     </div>
 
     <div id="message-container" class="hidden flex justify-center items-center mt-12">
-    <p class="text-lg text-black">Для сохранения результата теста войдите в свой Аккаунт или Зарегестрируйтесь</p>
+      <p class="text-lg border rounded-md bg-gray-100 p-2 ">Для сохранения результата теста войдите в свой <a href="{% url 'login' %}" class="text-blue-600 font-bold">Аккаунт</a> или <a href="{% url 'signup' %}" class="text-blue-600 font-bold">Зарегестрируйтесь.</a></p>
     </div>
 
   <form id="result-form" method="post" action="{% url 'selfcompassion_offer_save_result' %}">

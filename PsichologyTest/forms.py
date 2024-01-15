@@ -34,7 +34,7 @@ class CustomUserCreationForm(UserCreationForm):
         pattern = re.compile(r'^\+?1?\d{9,15}$')
 
         if not pattern.match(phone_number):
-            raise forms.ValidationError('Некорректный формат номера телефона.', code='invalid_phone_number')
+            raise forms.ValidationError('Некорректный номер телефона.', code='invalid_phone_number')
 
         return phone_number
 

@@ -7,7 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.6.0/hint.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/hint.css@2.6.0/dist/hint.min.js"></script>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <title>{% block title %}"ВЫСОТА" центр когнитивных технологий{% endblock %}</title>
 </head>
@@ -96,7 +95,7 @@
                         {% endif %}>
                         {% include 'PsichologyTest/SVG/svg_results.html' %}
                             Результаты
-                </button>
+                        </button>
                     </div>
                 </div>
                 <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
@@ -117,7 +116,7 @@
                         {% endif %}>
                         {% include 'PsichologyTest/SVG/svg_results.html' %}
                             Результаты
-                </button>
+                        </button>
                     </div>
                 </div>
                 <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
@@ -138,7 +137,7 @@
                         {% endif %}>
                         {% include 'PsichologyTest/SVG/svg_results.html' %}
                             Результаты
-                </button>
+                        </button>
                     </div>
                 </div>
                 <div class="border bg-card text-card-foreground rounded-md shadow-2xl card-container" data-v0-t="card" style="transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
@@ -159,11 +158,12 @@
                         {% endif %}>
                         {% include 'PsichologyTest/SVG/svg_results.html' %}
                             Результаты
-                    </button>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-2">
+        {% endblock %}
+            <div class="text-center pt-10">
                 <h1 class="font-bold text-lg mb-4">КОНТАКТЫ</h1>
             </div>
                 <div class="flex justify-center space-x-8 mb-12">
@@ -197,35 +197,32 @@
                         <h2 class="font-bold text-xs">YOUTUBE</h2>
                           </a>
                 </div>
-    </div>
+            </div>
+            <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                    var buttons = document.querySelectorAll('.resultButton');
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var buttons = document.querySelectorAll('.resultButton');
+                    buttons.forEach(function(button) {
+                      button.addEventListener('click', function() {
+                        // Проверяем статус авторизации
+                        var userIsAuthenticated = {{ request.user.is_authenticated|lower }};
 
-    buttons.forEach(function(button) {
-      button.addEventListener('click', function() {
-        // Проверяем статус авторизации
-        var userIsAuthenticated = {{ request.user.is_authenticated|lower }};
+                        // Очищаем предыдущие настройки подсказки
+                        button.classList.remove('hint--top');
 
-        // Очищаем предыдущие настройки подсказки
-        button.classList.remove('hint--top');
-
-        if (!userIsAuthenticated) {
-          // Применяем подсказку
-          button.classList.add('hint--top');
-          button.setAttribute('aria-label', 'Для просмотра результатов пожалуйста, авторизуйтесь!');
-          button.classList.add('hint');
-          button.classList.add('hint-multiline');
-          button.classList.add('hint--rounded');
-          button.classList.add('hint--info');
-        }
-      });
-    });
-  });
-</script>
-
-        {% endblock %}
+                        if (!userIsAuthenticated) {
+                          // Применяем подсказку
+                          button.classList.add('hint--top');
+                          button.setAttribute('aria-label', 'Для просмотра результатов пожалуйста, авторизуйтесь!');
+                          button.classList.add('hint');
+                          button.classList.add('hint-multiline');
+                          button.classList.add('hint--rounded');
+                          button.classList.add('hint--info');
+                        }
+                      });
+                    });
+                  });
+            </script>
     </main>
     <script src="{% static 'main.js' %}"></script>
 </body>
