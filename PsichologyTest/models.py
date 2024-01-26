@@ -186,7 +186,7 @@ class FoodbehaviorTestResult(models.Model):
     date_completed = models.DateTimeField(auto_now_add=True, null=True, verbose_name='Дата прохождения')
     email = models.EmailField(null=True, blank=True)
 
-    # Добавьте поля для каждой категории
+    # Добавление поля для каждой категории
     thinness_striving_score = models.IntegerField(verbose_name='Стремление к худобе')
     thinness_striving_stenain = models.IntegerField(default=0, verbose_name='Стенайн "Стремление к худобе"')
     bulimia_score = models.IntegerField(verbose_name='Булимия')

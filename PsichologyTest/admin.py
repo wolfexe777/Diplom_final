@@ -25,7 +25,6 @@ class FoodbehaviorTestChoiceInline(admin.TabularInline):
     extra = 0
 
 class QuestionAdmin(admin.ModelAdmin):
-    # actions_on_top = False
     inlines = [ChoiceInline]
     actions = ['delete_with_choices']
 
@@ -39,7 +38,6 @@ admin.site.register(Question, QuestionAdmin)
 
 
 class AnxietyTestQuestionAdmin(admin.ModelAdmin):
-    # actions_on_top = False
     inlines = [AnxietyTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -53,7 +51,6 @@ admin.site.register(AnxietyTestQuestion, AnxietyTestQuestionAdmin)
 
 
 class ImpulsivityTestQuestionAdmin(admin.ModelAdmin):
-    # actions_on_top = False
     inlines = [ImpulsivityTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -75,7 +72,6 @@ class ImpulsivityTestQuestionAdmin(admin.ModelAdmin):
 admin.site.register(ImpulsivityTestQuestion, ImpulsivityTestQuestionAdmin)
 
 class SelfcompassionTestQuestionAdmin(admin.ModelAdmin):
-    # actions_on_top = False
     inlines = [SelfcompassionTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -95,7 +91,6 @@ admin.site.register(SelfcompassionTestQuestion, SelfcompassionTestQuestionAdmin)
 
 
 class FoodbehaviorTestQuestionAdmin(admin.ModelAdmin):
-    # actions_on_top = False
     inlines = [FoodbehaviorTestChoiceInline]
     actions = ['delete_with_choices']
 
@@ -305,7 +300,6 @@ admin.site.register(FoodbehaviorTestResult, FoodbehaviorTestResultAdmin)
 
 
 class CustomUserAdmin(UserAdmin):
-    actions_on_top = False
     list_display = (
         'username', 'email', 'first_name', 'second_name', 'middle_name','date_of_birth',
         'phone_number', 'score', 'result_message', 'date_completed'
@@ -338,9 +332,7 @@ class CustomUserAdmin(UserAdmin):
     result_message.short_description = 'Результаты теста'
     date_completed.short_description = 'Дата прохождения теста'
 
-
     actions = ['delete_with_results']
-
 
     def delete_with_results(self, request, queryset):
         for user in queryset:

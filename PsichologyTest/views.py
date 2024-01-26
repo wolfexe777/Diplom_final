@@ -35,7 +35,7 @@ def test(request):
 
         # Если пользователь не авторизован, предложить сохранить результаты
         if not request.user.is_authenticated:
-            request.session['test_result'] = {'score': score, 'result_message': result_message}
+            request.session['depression_test_result'] = {'score': score, 'result_message': result_message}
             return render(request, 'PsichologyTest/BeckDepression/offer_save_result.html', {'score': score, 'result_message': result_message})
 
         # Если пользователь авторизован, сохраняем результаты в базе данных
@@ -60,7 +60,7 @@ def anxiety_test(request):
 
         # Если пользователь не авторизован, предложить сохранить результаты
         if not request.user.is_authenticated:
-            request.session['test_result'] = {'score': score, 'result_message': result_message}
+            request.session['anxiety_test_result'] = {'score': score, 'result_message': result_message}
             return render(request, 'PsichologyTest/BeckAnxiety/anxiety_offer_save_result.html', {'score': score, 'result_message': result_message})
 
         # Если пользователь авторизован, сохраняем результаты в базе данных
@@ -93,7 +93,8 @@ def impulsivity_test(request):
 
         # Если пользователь не авторизован, предложить сохранить результаты
         if not request.user.is_authenticated:
-            request.session['test_result'] = {'score': score, 'result_message': result_message}
+            request.session['impulsivity_test_result'] = {'score': score, 'result_message': result_message}
+            request.session.save()
             return render(request, 'PsichologyTest/Impulsivity/impulsivity_offer_save_result.html', {'score': score, 'result_message': result_message})
 
         # Если пользователь авторизован, сохраняем результаты в базе данных
@@ -517,11 +518,61 @@ def signup(request):
             user = form.save()
             login(request, user)
 
-            # Проверяем, есть ли результаты теста в сессии
-            if 'test_result' in request.session:
-                test_result_data = request.session['test_result']
+            # Проверяем, есть ли результаты теста по депрессии в сессии
+            if 'depression_test_result' in request.session:
+                test_result_data = request.session['depression_test_result']
                 TestResult.objects.create(user=user, score=test_result_data['score'],
                                           result_message=test_result_data['result_message'])
+                del request.session['depression_test_result']
+
+            # Проверяем, есть ли результаты теста по тревожности в сессии
+            if 'anxiety_test_result' in request.session:
+                test_result_data = request.session['anxiety_test_result']
+                AnxietyTestResult.objects.create(user=user, score=test_result_data['score'],
+                                                 result_message=test_result_data['result_message'])
+                del request.session['anxiety_test_result']
+
+            # Проверяем, есть ли результаты теста по импульсивности в сессии
+            if 'impulsivity_test_result' in request.session:
+                test_result_data = request.session['impulsivity_test_result']
+                ImpulsivityTestResult.objects.create(user=user, score=test_result_data['score'],
+                                                     result_message=test_result_data['result_message'])
+                del request.session['impulsivity_test_result']
+
+            # Проверяем, есть ли результаты теста по самосостраданию в сессии
+            if 'selfcompassion_test_result' in request.session:
+                test_result_data = request.session['selfcompassion_test_result']
+                SelfcompassionTestResult.objects.create(user=user,
+                                                        kindness_score=test_result_data['kindness_average'],
+                                                        self_blame_score=test_result_data['self_blame_average'],
+                                                        human_commonality_score=test_result_data['human_commonality_average'],
+                                                        isolation_score=test_result_data['isolation_average'],
+                                                        mindfulness_score=test_result_data['mindfulness_average'],
+                                                        overidentification_score=test_result_data['overidentification_average'],
+                                                        total_score=test_result_data['total_score'],
+                                                        result_message=test_result_data['result_message'])
+                del request.session['selfcompassion_test_result']
+
+            # Проверяем, есть ли результаты теста по поведению в еде в сессии
+            if 'foodbehavior_test_result' in request.session:
+                test_result_data = request.session['foodbehavior_test_result']
+                FoodbehaviorTestResult.objects.create(user=user,
+                                                      thinness_striving_score=test_result_data['thinness_striving_score'],
+                                                      thinness_striving_stenain=test_result_data['thinness_striving_stenain'],
+                                                      bulimia_score=test_result_data['bulimia_score'],
+                                                      bulimia_stenain=test_result_data['bulimia_stenain'],
+                                                      body_dissatisfaction_score=test_result_data['body_dissatisfaction_score'],
+                                                      body_dissatisfaction_stenain=test_result_data['body_dissatisfaction_stenain'],
+                                                      ineffectiveness_score=test_result_data['ineffectiveness_score'],
+                                                      ineffectiveness_stenain=test_result_data['ineffectiveness_stenain'],
+                                                      perfectionism_score=test_result_data['perfectionism_score'],
+                                                      perfectionism_stenain=test_result_data['perfectionism_stenain'],
+                                                      interpersonal_distrust_score=test_result_data['interpersonal_distrust_score'],
+                                                      interpersonal_distrust_stenain=test_result_data['interpersonal_distrust_stenain'],
+                                                      interoceptive_incompetence_score=test_result_data['interoceptive_incompetence_score'],
+                                                      interoceptive_incompetence_stenain=test_result_data['interoceptive_incompetence_stenain'],
+                                                      result_message=test_result_data['result_message'])
+                del request.session['foodbehavior_test_result']
 
             return redirect('home')
     else:
@@ -536,13 +587,63 @@ def user_login(request):
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                if 'test_result' in request.session:
-                    test_result_data = request.session['test_result']
-                    TestResult.objects.create(user=user, score=test_result_data['score'], result_message=test_result_data['result_message'])
-                    # Используем временную переменную для сообщения
-                    success_message = 'Результат успешно сохранен!'
-                    messages.success(request, success_message)
-                    del request.session['test_result']
+
+                # Проверяем, есть ли результаты теста по депрессии в сессии
+                if 'depression_test_result' in request.session:
+                    test_result_data = request.session['depression_test_result']
+                    TestResult.objects.create(user=user, score=test_result_data['score'],
+                                              result_message=test_result_data['result_message'])
+                    del request.session['depression_test_result']
+
+                # Проверяем, есть ли результаты теста по тревожности в сессии
+                if 'anxiety_test_result' in request.session:
+                    test_result_data = request.session['anxiety_test_result']
+                    AnxietyTestResult.objects.create(user=user, score=test_result_data['score'],
+                                                     result_message=test_result_data['result_message'])
+                    del request.session['anxiety_test_result']
+
+                # Проверяем, есть ли результаты теста по импульсивности в сессии
+                if 'impulsivity_test_result' in request.session:
+                    test_result_data = request.session['impulsivity_test_result']
+                    ImpulsivityTestResult.objects.create(user=user, score=test_result_data['score'],
+                                                         result_message=test_result_data['result_message'])
+                    del request.session['impulsivity_test_result']
+
+                # Проверяем, есть ли результаты теста по самосостраданию в сессии
+                if 'selfcompassion_test_result' in request.session:
+                    test_result_data = request.session['selfcompassion_test_result']
+                    SelfcompassionTestResult.objects.create(user=user,
+                                                            kindness_score=test_result_data['kindness_average'],
+                                                            self_blame_score=test_result_data['self_blame_average'],
+                                                            human_commonality_score=test_result_data['human_commonality_average'],
+                                                            isolation_score=test_result_data['isolation_average'],
+                                                            mindfulness_score=test_result_data['mindfulness_average'],
+                                                            overidentification_score=test_result_data['overidentification_average'],
+                                                            total_score=test_result_data['total_score'],
+                                                            result_message=test_result_data['result_message'])
+                    del request.session['selfcompassion_test_result']
+
+                # Проверяем, есть ли результаты теста по поведению в еде в сессии
+                if 'foodbehavior_test_result' in request.session:
+                    test_result_data = request.session['foodbehavior_test_result']
+                    FoodbehaviorTestResult.objects.create(user=user,
+                                                          thinness_striving_score=test_result_data['thinness_striving_score'],
+                                                          thinness_striving_stenain=test_result_data['thinness_striving_stenain'],
+                                                          bulimia_score=test_result_data['bulimia_score'],
+                                                          bulimia_stenain=test_result_data['bulimia_stenain'],
+                                                          body_dissatisfaction_score=test_result_data['body_dissatisfaction_score'],
+                                                          body_dissatisfaction_stenain=test_result_data['body_dissatisfaction_stenain'],
+                                                          ineffectiveness_score=test_result_data['ineffectiveness_score'],
+                                                          ineffectiveness_stenain=test_result_data['ineffectiveness_stenain'],
+                                                          perfectionism_score=test_result_data['perfectionism_score'],
+                                                          perfectionism_stenain=test_result_data['perfectionism_stenain'],
+                                                          interpersonal_distrust_score=test_result_data['interpersonal_distrust_score'],
+                                                          interpersonal_distrust_stenain=test_result_data['interpersonal_distrust_stenain'],
+                                                          interoceptive_incompetence_score=test_result_data['interoceptive_incompetence_score'],
+                                                          interoceptive_incompetence_stenain=test_result_data['interoceptive_incompetence_stenain'],
+                                                          result_message=test_result_data['result_message'])
+                    del request.session['foodbehavior_test_result']
+
                 return redirect('home')
             else:
                 messages.error(request, 'Неверное имя пользователя или пароль. Попробуйте снова.')
@@ -550,6 +651,7 @@ def user_login(request):
             messages.error(request, 'Неверное имя пользователя или пароль. Попробуйте снова.')
     else:
         form = AuthenticationForm()
+
     return render(request, 'PsichologyTest/login.html', {'form': form})
 
 def user_logout(request):
