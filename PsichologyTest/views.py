@@ -830,6 +830,11 @@ def selfcompassion_view_results(request):
     # Строим гистограмму
     fig, ax = plt.subplots()
 
+    plt.title('')
+    plt.xlabel('')
+    plt.ylabel('')
+    plt.xticks(x, dates, rotation='horizontal')
+
     # Добавляем остальные столбцы
     bars_data = [
         (kindness_score, 'Доброта к себе', '#22c55e'),
@@ -895,6 +900,11 @@ def foodbehavior_view_results(request):
 
     # Строим гистограмму
     fig, ax = plt.subplots()
+
+    plt.title('')
+    plt.xlabel('')
+    plt.ylabel('')
+    plt.xticks(x, dates, rotation='horizontal')
 
     # Добавляем остальные столбцы
     bars_data = [
